@@ -2,6 +2,8 @@ use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
 use std::io::Write;
+use term_painter::Color::*;
+use term_painter::ToStyle;
 
 fn read_guess() -> u32 {
     let mut str = String::new();
@@ -29,11 +31,12 @@ fn play_game() {
 
         match guess.cmp(&secret_num) {
             Ordering::Equal => {
+                println!("{}", Green.paint("That's it!"));
                 println!("That's it! It took you {} guess(es) to win.", steps);
                 return;
             }
-            Ordering::Greater => println!("Too big"),
-            Ordering::Less => println!("Too small"),
+            Ordering::Greater => println!("{}", Red.paint("Too big")),
+            Ordering::Less => println!("{}", Red.paint("Too small")),
         }
     }
 }
@@ -53,9 +56,14 @@ fn ask_for_retry() -> bool {
 }
 
 fn main() {
-    println!("!!!!!!!!!!!!!!!!!");
-    println!("! GUESSING GAME !");
-    println!("!!!!!!!!!!!!!!!!!");
+    println!("{}", White.bg(White).bold().paint("                 "));
+    println!(
+        "{}{}{}",
+        White.bg(White).bold().paint(" "),
+        Cyan.bg(White).bold().paint(" GUESSING GAME "),
+        White.bg(White).bold().paint(" ")
+    );
+    println!("{}", White.bg(White).bold().paint("                 "));
     println!();
 
     loop {
