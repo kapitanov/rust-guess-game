@@ -9,8 +9,8 @@ fn read_guess() -> u32 {
     let mut str = String::new();
     loop {
         print!("Enter your guess: ");
-        io::stdout().flush().expect("stdout.flush()");
-        io::stdin().read_line(&mut str).expect("stdin.readline()");
+        io::stdout().flush().unwrap();
+        io::stdin().read_line(&mut str).unwrap();
         let num: u32 = match str.trim().parse() {
             Ok(n) => n,
             Err(_) => {
@@ -32,7 +32,7 @@ fn play_game() {
         match guess.cmp(&secret_num) {
             Ordering::Equal => {
                 println!("{}", Green.paint("That's it!"));
-                println!("That's it! It took you {} guess(es) to win.", steps);
+                println!("It took you {} guess(es) to win.", steps);
                 return;
             }
             Ordering::Greater => println!("{}", Red.paint("Too big")),
@@ -43,10 +43,10 @@ fn play_game() {
 
 fn ask_for_retry() -> bool {
     print!("Do you want to play again (Y/N)? ");
-    io::stdout().flush().expect("stdout.flush()");
+    io::stdout().flush().unwrap();
 
     let mut str = String::new();
-    io::stdin().read_line(&mut str).expect("stdin.readline()");
+    io::stdin().read_line(&mut str).unwrap();
     str = str.trim().to_uppercase();
     return match str.as_ref() {
         "Y" => true,
